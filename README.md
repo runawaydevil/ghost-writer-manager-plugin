@@ -227,3 +227,8 @@ MIT
 ## Support
 
 If you encounter any issues or have questions, please [open an issue](https://github.com/diegoeis/ghost-writer-manager-plugin/issues).
+
+
+
+
+
