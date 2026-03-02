@@ -433,7 +433,7 @@ export default class GhostWriterManagerPlugin extends Plugin {
 	async openImportFromGhostModal(): Promise<void> {
 		const apiKey = this.loadApiKey();
 		if (!this.settings.ghostUrl || !apiKey) {
-			new Notice('Please configure Ghost URL and admin API key first');
+			new Notice('Please configure ghost URL and admin API key first');
 			return;
 		}
 
@@ -515,7 +515,7 @@ export default class GhostWriterManagerPlugin extends Plugin {
 	async openLinkToGhostModal(): Promise<void> {
 		const apiKey = this.loadApiKey();
 		if (!this.settings.ghostUrl || !apiKey) {
-			new Notice('Please configure Ghost URL and admin API key first');
+			new Notice('Please configure ghost URL and admin API key first');
 			return;
 		}
 
@@ -643,7 +643,7 @@ export default class GhostWriterManagerPlugin extends Plugin {
 		// Check credentials
 		const apiKey = this.loadApiKey();
 		if (!this.settings.ghostUrl || !apiKey) {
-			new Notice('Please configure Ghost URL and admin API key first');
+			new Notice('Please configure ghost URL and admin API key first');
 			return;
 		}
 
@@ -777,8 +777,8 @@ class GhostWriterSettingTab extends PluginSettingTab {
 				}));
 
 		new Setting(containerEl)
-			.setName('Admin api key secret name')
-			.setDesc('Name of the secret in settings > keychain that contains your ghost admin api key (format: id:secret)')
+			.setName('Admin API key secret name')
+			.setDesc('Name of the secret in Settings > Keychain that contains your Ghost admin API key (format: id:secret)')
 			.addText(text => text
 				.setPlaceholder('ghost-api-key')
 				.setValue(this.plugin.settings.ghostApiKeySecretName)
@@ -846,7 +846,7 @@ class GhostWriterSettingTab extends PluginSettingTab {
 			.setName('YAML prefix')
 			.setDesc('Prefix for ghost metadata in frontmatter (e.g., "ghost_" will create ghost_status, ghost_tags)')
 			.addText(text => text
-				.setPlaceholder('Eg: ghost_')
+				.setPlaceholder('e.g. ghost_')
 				.setValue(this.plugin.settings.yamlPrefix)
 				.onChange(async (value) => {
 					this.plugin.settings.yamlPrefix = value.trim();
