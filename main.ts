@@ -94,15 +94,6 @@ export default class GhostWriterManagerPlugin extends Plugin {
 			callback: () => { void this.activateCalendarView(); }
 		});
 
-		// Add command to manually sync
-		this.addCommand({
-			id: 'sync-ghost-posts',
-			name: 'Sync with ghost',
-			callback: async () => {
-				await this.syncWithGhost();
-			}
-		});
-
 		// Add command to test connection
 		this.addCommand({
 			id: 'test-ghost-connection',
