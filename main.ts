@@ -340,7 +340,7 @@ export default class GhostWriterManagerPlugin extends Plugin {
 
 			if (!apiKey) {
 				console.error('[Ghost] Secret not found or empty:', this.settings.ghostApiKeySecretName);
-				new Notice(`Secret "${this.settings.ghostApiKeySecretName}" not found in Keychain. Please create it in Settings → Keychain.`);
+				new Notice(`Secret "${this.settings.ghostApiKeySecretName}" not found in Keychain. Please create it in settings → Keychain.`);
 				return '';
 			}
 
