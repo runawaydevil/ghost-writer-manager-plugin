@@ -18,6 +18,33 @@ The project has a fully configured build system with hot reload support:
 
 **Development Setup**: Copy `dev.config.example.json` to `dev.config.json` and set your test vault path for hot reload functionality.
 
+## Release Process
+
+Use the `/release` command for a guided release. The steps below are the canonical process:
+
+1. Run `npm run lint` — fix any errors first
+2. Ensure working tree is clean (`git status`)
+3. Run `npm version patch|minor|major` — bumps `manifest.json`, `versions.json`, and creates a commit
+4. **Fix the tag** — `npm version` creates a `v`-prefixed tag (e.g., `v0.2.6`). Delete it and recreate without the prefix:
+   ```bash
+   VERSION=$(node -p "require('./manifest.json').version")
+   git tag -d "v${VERSION}"
+   git push origin ":refs/tags/v${VERSION}"
+   git tag "${VERSION}"
+   ```
+5. Run `npm run build`
+6. Push: `git push origin main && git push origin "${VERSION}"`
+7. Create GitHub release from the tag, attaching `main.js`, `manifest.json`, and `styles.css`
+
+### Tag Convention (CRITICAL)
+
+**Tags MUST NOT have a `v` prefix.**
+
+- ✅ Correct: `0.2.6`, `0.3.0`, `1.0.0`
+- ❌ Wrong: `v0.2.6`, `v0.3.0`, `v1.0.0`
+
+`npm version` always auto-creates a `v`-prefixed tag. Always delete and recreate it without the prefix before pushing.
+
 ## Architecture
 
 ### Core Components
