@@ -64,7 +64,7 @@ export class ImportFromGhostModal extends Modal {
 					.onChange(value => { this.urlInput = value.trim(); });
 
 				text.inputEl.setAttribute('aria-label', 'Ghost editor URL');
-				text.inputEl.style.width = '100%';
+				text.inputEl.addClass('ghost-modal-input-full-width');
 
 				// Allow submitting with Enter
 				text.inputEl.addEventListener('keydown', (e: KeyboardEvent) => {
@@ -89,8 +89,7 @@ export class ImportFromGhostModal extends Modal {
 				btn.buttonEl.setAttribute('aria-label', 'Cancel import');
 			});
 
-		buttonSetting.settingEl.style.borderTop = 'none';
-		buttonSetting.settingEl.style.paddingTop = '0';
+		buttonSetting.settingEl.setCssProps({'border-top': 'none', 'padding-top': '0'});
 	}
 
 	private async handleImport(): Promise<void> {

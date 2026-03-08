@@ -20,22 +20,22 @@ export function htmlToMarkdown(html: string): string {
 	// <pre><code class="language-js">…</code></pre>
 	md = md.replace(
 		/<pre[^>]*><code(?:\s+class="language-([^"]*)")?[^>]*>([\s\S]*?)<\/code><\/pre>/gi,
-		(_, lang, code) => {
+		(_: string, lang: string | undefined, code: string) => {
 			const language = lang ?? '';
 			return `\`\`\`${language}\n${unescapeHtml(code.trim())}\n\`\`\``;
 		}
 	);
 
 	// ── Headings ────────────────────────────────────────────────────────────
-	md = md.replace(/<h1[^>]*>([\s\S]*?)<\/h1>/gi, (_, t) => `# ${stripTags(t).trim()}\n`);
-	md = md.replace(/<h2[^>]*>([\s\S]*?)<\/h2>/gi, (_, t) => `## ${stripTags(t).trim()}\n`);
-	md = md.replace(/<h3[^>]*>([\s\S]*?)<\/h3>/gi, (_, t) => `### ${stripTags(t).trim()}\n`);
-	md = md.replace(/<h4[^>]*>([\s\S]*?)<\/h4>/gi, (_, t) => `#### ${stripTags(t).trim()}\n`);
-	md = md.replace(/<h5[^>]*>([\s\S]*?)<\/h5>/gi, (_, t) => `##### ${stripTags(t).trim()}\n`);
-	md = md.replace(/<h6[^>]*>([\s\S]*?)<\/h6>/gi, (_, t) => `###### ${stripTags(t).trim()}\n`);
+	md = md.replace(/<h1[^>]*>([\s\S]*?)<\/h1>/gi, (_: string, t: string) => `# ${stripTags(t).trim()}\n`);
+	md = md.replace(/<h2[^>]*>([\s\S]*?)<\/h2>/gi, (_: string, t: string) => `## ${stripTags(t).trim()}\n`);
+	md = md.replace(/<h3[^>]*>([\s\S]*?)<\/h3>/gi, (_: string, t: string) => `### ${stripTags(t).trim()}\n`);
+	md = md.replace(/<h4[^>]*>([\s\S]*?)<\/h4>/gi, (_: string, t: string) => `#### ${stripTags(t).trim()}\n`);
+	md = md.replace(/<h5[^>]*>([\s\S]*?)<\/h5>/gi, (_: string, t: string) => `##### ${stripTags(t).trim()}\n`);
+	md = md.replace(/<h6[^>]*>([\s\S]*?)<\/h6>/gi, (_: string, t: string) => `###### ${stripTags(t).trim()}\n`);
 
 	// ── Blockquotes ─────────────────────────────────────────────────────────
-	md = md.replace(/<blockquote[^>]*>([\s\S]*?)<\/blockquote>/gi, (_, inner) => {
+	md = md.replace(/<blockquote[^>]*>([\s\S]*?)<\/blockquote>/gi, (_: string, inner: string) => {
 		const text = stripTags(inner).trim();
 		return text.split('\n').map(line => `> ${line}`).join('\n') + '\n';
 	});
@@ -62,11 +62,11 @@ export function htmlToMarkdown(html: string): string {
 	md = md.replace(/<img[^>]+src="([^"]*)"[^>]*\/?>/gi, '![]($1)');
 
 	// ── Figures (Ghost wraps images in <figure>) ─────────────────────────
-	md = md.replace(/<figure[^>]*>([\s\S]*?)<\/figure>/gi, (_, inner) => {
+	md = md.replace(/<figure[^>]*>([\s\S]*?)<\/figure>/gi, (_: string, inner: string) => {
 		// figcaption becomes italic text under the image
-		const caption = inner.match(/<figcaption[^>]*>([\s\S]*?)<\/figcaption>/i);
+		const captionMatch = inner.match(/<figcaption[^>]*>([\s\S]*?)<\/figcaption>/i);
 		const imgMd = inner.replace(/<figcaption[\s\S]*?<\/figcaption>/gi, '').trim();
-		const captionText = caption ? `\n*${stripTags(caption[1]).trim()}*` : '';
+		const captionText = captionMatch ? `\n*${stripTags(captionMatch[1]).trim()}*` : '';
 		return `${imgMd}${captionText}\n`;
 	});
 
@@ -89,7 +89,7 @@ export function htmlToMarkdown(html: string): string {
 	md = md.replace(/<br[^>]*\/?>/gi, '\n');
 
 	// ── Paragraphs ──────────────────────────────────────────────────────────
-	md = md.replace(/<p[^>]*>([\s\S]*?)<\/p>/gi, (_, inner) => {
+	md = md.replace(/<p[^>]*>([\s\S]*?)<\/p>/gi, (_: string, inner: string) => {
 		const text = inner.trim();
 		return text ? `${text}\n\n` : '';
 	});

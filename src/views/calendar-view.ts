@@ -210,7 +210,7 @@ export class CalendarView extends ItemView {
 		for (const file of this.app.vault.getMarkdownFiles()) {
 			const cache = this.app.metadataCache.getFileCache(file);
 			if (!cache?.frontmatter) continue;
-			const ghostId = cache.frontmatter[idKey];
+			const ghostId = cache.frontmatter[idKey] as unknown;
 			if (typeof ghostId === 'string' && ghostId) {
 				index.set(ghostId, file);
 			}
@@ -266,7 +266,8 @@ export class CalendarView extends ItemView {
 	}
 
 	private renderDayCell(day: number, hasPublished: boolean, hasScheduled: boolean, isToday: boolean): HTMLElement {
-		const cell = createDiv({ cls: 'ghost-calendar-day-cell' });
+		const cell = document.createElement('div');
+		cell.addClass('ghost-calendar-day-cell');
 		const hasPosts = hasPublished || hasScheduled;
 
 		if (isToday) {
@@ -387,7 +388,8 @@ export class CalendarView extends ItemView {
 	}
 
 	private renderPostItem(post: CalendarPost): HTMLElement {
-		const item = createDiv({ cls: 'ghost-calendar-post-item' });
+		const item = document.createElement('div');
+		item.addClass('ghost-calendar-post-item');
 
 		// Status badge
 		const statusCls = post.status === 'published'
@@ -420,7 +422,7 @@ export class CalendarView extends ItemView {
 		extLink.setAttribute('href', post.ghostAdminUrl);
 		extLink.setAttribute('target', '_blank');
 		extLink.setAttribute('rel', 'noopener noreferrer');
-		extLink.setAttribute('aria-label', 'Open in ghost admin');
+		extLink.setAttribute('aria-label', 'Open in Ghost admin');
 		setIcon(extLink, 'external-link');
 
 		return item;

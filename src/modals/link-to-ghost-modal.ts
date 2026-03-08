@@ -105,8 +105,7 @@ export class LinkToGhostModal extends Modal {
 				btn.buttonEl.setAttribute('aria-label', 'Cancel');
 			});
 
-		buttonSetting.settingEl.style.borderTop = 'none';
-		buttonSetting.settingEl.style.paddingTop = '0';
+		buttonSetting.settingEl.setCssProps({'border-top': 'none', 'padding-top': '0'});
 	}
 
 	private renderFields(): void {
@@ -136,7 +135,7 @@ export class LinkToGhostModal extends Modal {
 					.onChange(value => { this.ghostUrlInput = value.trim(); });
 
 				text.inputEl.setAttribute('aria-label', 'Ghost editor URL');
-				text.inputEl.style.width = '100%';
+				text.inputEl.addClass('ghost-modal-input-full-width');
 			});
 	}
 
@@ -157,7 +156,7 @@ export class LinkToGhostModal extends Modal {
 					});
 
 				text.inputEl.setAttribute('aria-label', 'Obsidian note name');
-				text.inputEl.style.width = '100%';
+				text.inputEl.addClass('ghost-modal-input-full-width');
 
 				text.inputEl.addEventListener('keydown', (e: KeyboardEvent) => {
 					if (e.key === 'Escape' && this.autocompleteContainer) {
@@ -203,7 +202,7 @@ export class LinkToGhostModal extends Modal {
 					.find(f => f.basename === name) ?? null;
 
 				// Update the input visually
-				const input = wrapper.querySelector('input') as HTMLInputElement | null;
+				const input = wrapper.querySelector<HTMLInputElement>('input');
 				if (input) input.value = name;
 
 				container.empty();

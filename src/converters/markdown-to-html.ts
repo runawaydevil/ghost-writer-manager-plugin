@@ -29,8 +29,8 @@ export function markdownToHtml(markdown: string): string {
 	html = html.replace(/`(.+?)`/g, '<code>$1</code>');
 
 	// Convert code blocks
-	html = html.replace(/```(\w+)?\n([\s\S]+?)```/g, (match, lang, code) => {
-		const language = lang || '';
+	html = html.replace(/```(\w+)?\n([\s\S]+?)```/g, (_: string, lang: string | undefined, code: string) => {
+		const language = lang ?? '';
 		return `<pre><code class="language-${language}">${escapeHtml(code.trim())}</code></pre>`;
 	});
 
