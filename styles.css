@@ -1,5 +1,29 @@
 /* Ghost Writer Manager Plugin Styles */
 
+/* ─── Paywall Marker (--members-only--) ─────────────────────────────────────── */
+
+.ghost-paywall-line {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: var(--size-4-2) 0;
+	padding: var(--size-4-1) var(--size-4-3);
+	background-color: color-mix(in srgb, var(--interactive-accent) 15%, transparent);
+	border: 1px dashed var(--interactive-accent);
+	border-radius: var(--radius-s);
+	user-select: none;
+	cursor: default;
+}
+
+.ghost-paywall-label {
+	font-size: var(--font-ui-smaller);
+	font-weight: var(--font-medium);
+	color: var(--interactive-accent);
+	letter-spacing: 0.03em;
+	text-transform: uppercase;
+}
+
+
 /* ─── Ghost Link/Import Modals ──────────────────────────────────────────────── */
 
 .ghost-modal-description {

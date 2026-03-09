@@ -8,6 +8,7 @@ import { ImportFromGhostModal } from './src/modals/import-from-ghost-modal';
 import { LinkToGhostModal } from './src/modals/link-to-ghost-modal';
 import { updateFrontmatterWithGhostUrl, updateFrontmatterWithGhostId, upsertGhostMetadata, splitFrontmatter, joinFrontmatter } from './src/frontmatter-parser';
 import { htmlToMarkdown } from './src/converters/html-to-markdown';
+import { paywallDecorationPlugin, paywallDeduplicateExtension } from './src/editor/paywall-decoration';
 
 // ⚠️ IMPORTANT: Set to false before production build/release
 // Development mode flag - enables auto-sync on file changes (2s debounce)
@@ -83,6 +84,9 @@ export default class GhostWriterManagerPlugin extends Plugin {
 		this.addRibbonIcon('calendar-days', 'Open Ghost editorial calendar', () => {
 			void this.activateCalendarView();
 		});
+
+		// Register editor extensions for --members-only-- line decoration and deduplication
+		this.registerEditorExtension([paywallDecorationPlugin, paywallDeduplicateExtension]);
 
 		// Add settings tab
 		this.addSettingTab(new GhostWriterSettingTab(this.app, this));

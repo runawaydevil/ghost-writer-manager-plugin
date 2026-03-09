@@ -29,7 +29,11 @@ export function generateNewPostTemplate(settings: GhostWriterSettings, title?: s
 
 	return `${frontmatter}# ${postTitle}
 
-Write your post content here...
+Write your public preview here...
+
+--members-only--
+
+Write your members-only content here...
 `;
 }
 

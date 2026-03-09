@@ -12,6 +12,9 @@
 export function markdownToHtml(markdown: string): string {
 	let html = markdown;
 
+	// Convert members-only paywall marker (only the last occurrence is kept)
+	html = html.replace(/^--members-only--$/gim, '<!--members-only-->');
+
 	// Convert headings
 	html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
 	html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
@@ -86,6 +89,29 @@ function escapeHtml(text: string): string {
 		"'": '&#039;'
 	};
 	return text.replace(/[&<>"']/g, m => map[m]);
+}
+
+/**
+ * Ensure at most one --members-only-- marker exists in the content.
+ * If multiple are found, keeps only the last one and removes the others.
+ * Returns the cleaned content (or the original if zero or one marker).
+ */
+export function normalizePaywallMarker(content: string): string {
+	const MARKER = '--members-only--';
+	const lines = content.split('\n');
+	const markerIndices: number[] = [];
+
+	for (let i = 0; i < lines.length; i++) {
+		if (lines[i].trim() === MARKER) {
+			markerIndices.push(i);
+		}
+	}
+
+	if (markerIndices.length <= 1) return content;
+
+	// Keep only the last marker — remove all earlier ones
+	const toRemove = new Set(markerIndices.slice(0, -1));
+	return lines.filter((_, i) => !toRemove.has(i)).join('\n');
 }
 
 /**

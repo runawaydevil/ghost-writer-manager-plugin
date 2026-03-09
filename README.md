@@ -11,6 +11,7 @@ One-way synchronization from Obsidian to Ghost CMS with post scheduling, YAML me
 - 🔄 **Automatic sync** - Debounced sync on file save (2s delay)
 - ⏰ **Periodic sync** - Configurable interval sync (default: 15 minutes)
 - ✨ **Markdown to Lexical conversion** - Full markdown support including images
+- 🔒 **Paywall marker** - Control the public preview line with `--members-only--`
 - 🔐 **Secure credentials** - API keys stored in Obsidian's secure keychain
 - 🔑 **JWT authentication** - Secure Ghost Admin API integration
 - 📊 **Status bar indicator** - Visual feedback on sync status
@@ -138,6 +139,25 @@ g_no_sync: false                 # Disable sync for this post
 Your post content here...
 ```
 
+### Paywall marker
+
+Control where the public preview ends for members-only posts. Add `--members-only--` on its own line anywhere in the post body:
+
+```markdown
+# My Post
+
+This paragraph is visible to everyone.
+
+--members-only--
+
+This content is only visible to paying members.
+```
+
+- The marker is rendered as a styled banner in the Obsidian editor (uses your theme's accent color)
+- Everything above the marker is the public preview; everything below is behind the Ghost paywall
+- Only one marker is allowed — if you add a second one, the first is removed automatically
+- Works together with `g_post_access: paid` or `g_post_access: members`
+
 ### Post Scheduling
 
 Control when posts are published:
@@ -207,6 +227,9 @@ const DEV_MODE = true; // Set to false for production builds
 
 ### ✅ Completed (v0.2.0)
 - [x] Editorial calendar sidebar view
+
+### ✅ Completed (v0.2.7)
+- [x] Paywall marker (`--members-only--`) with live editor decoration and auto-deduplication
 
 ### 🚧 Future Features
 - [ ] Two-way sync (Ghost → Obsidian)

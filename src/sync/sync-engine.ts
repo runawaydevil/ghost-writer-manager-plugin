@@ -2,7 +2,7 @@ import { App, TFile, Notice } from 'obsidian';
 import { GhostAPIClient } from '../ghost/api-client';
 import { GhostWriterSettings, GhostPost } from '../types';
 import { parseGhostMetadata, extractContent, updateFrontmatterWithGhostId } from '../frontmatter-parser';
-import { extractTitle, generateSlug } from '../converters/markdown-to-html';
+import { extractTitle, generateSlug, normalizePaywallMarker } from '../converters/markdown-to-html';
 import { markdownToLexical } from '../converters/markdown-to-lexical';
 
 /**
@@ -59,7 +59,8 @@ export class SyncEngine {
 			this.onStatusChange?.('syncing', 'Syncing...');
 
 			// Extract markdown content (without frontmatter)
-			const markdownContent = extractContent(content);
+			const rawMarkdown = extractContent(content);
+			const markdownContent = normalizePaywallMarker(rawMarkdown);
 			console.debug('[Ghost Sync] Markdown content length:', markdownContent.length);
 			console.debug('[Ghost Sync] Markdown preview:', markdownContent.substring(0, 200));
 

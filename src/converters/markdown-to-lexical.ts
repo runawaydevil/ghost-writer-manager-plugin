@@ -31,6 +31,8 @@ interface LexicalNode {
 	code?: string;
 	language?: string;
 	caption?: string;
+	// Paywall card fields
+	paywall?: boolean;
 }
 
 interface LexicalDocument {
@@ -53,6 +55,13 @@ export function markdownToLexical(markdown: string): string {
 
 		// Skip empty lines
 		if (line.trim() === '') {
+			i++;
+			continue;
+		}
+
+		// Members-only paywall marker
+		if (line.trim() === '--members-only--') {
+			nodes.push(createPaywall());
 			i++;
 			continue;
 		}
@@ -296,6 +305,16 @@ function createImage(src: string, alt: string): LexicalNode {
 		format: '',
 		indent: 0,
 		direction: null
+	};
+}
+
+/**
+ * Create a paywall (members-only) node
+ */
+function createPaywall(): LexicalNode {
+	return {
+		type: 'paywall',
+		version: 1
 	};
 }
 
